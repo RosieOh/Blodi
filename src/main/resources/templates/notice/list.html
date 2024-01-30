@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:src="@{/js/datatables.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/datatables.css}">
+
+    <title>공지사항</title>
+    <th:block th:replace="~{layout/head :: head}"></th:block>
+</head>
+<style>
+    .breadcrumb a { color: #464646; }
+
+    @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding&display=swap');
+
+    .table1 {
+        font-size: 1.25rem;
+        border-top: 2px solid #dee2e6;
+        border-bottom: 1px solid #dbdbdb;;
+    }
+    .table1 th {
+        white-space: nowrap;
+        background: #eff1f8;
+    }
+    .table1 td {
+        white-space: nowrap;
+    }
+    .table1 td, .table1 th {
+        padding: 0.75em 0.75em;
+    }
+
+    .item1 { width:6%; }
+    .item2 { width:64%; }
+    .item3 { width:10%; }
+    .item4 { width:10%; }
+    .item5 { width:10%; }
+</style>
+<body id="top">
+<main>
+    <th:block th:replace="~{layout/header :: header}"></th:block>
+
+    <section class="page-title" style="background: linear-gradient(to right, #71AEE8, #77E9CE); padding: 100px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h3>공지사항</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row mt-3">
+        <form action="/notice/list" method="get" class="col-md-8 offset-md-2">
+        </form>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">공지사항</h5>
+                    <table class="table1 is-centered is-fullwidth" id="myTable1">
+                        <thead>
+                        <tr>
+                            <th class="item1" scope="col" style="text-align: center">번호</th>
+                            <th class="item2" scope="col" style="text-align: center">제목</th>
+                            <th class="item3" scope="col" style="text-align: center">작성자</th>
+                            <th class="item4" scope="col" style="text-align: center">게시일</th>
+                            <!-- <th class="item5" scope="col" style="text-align: center">조회수</th>-->
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="board : ${boardList}">
+                            <td th:text="${board.bno}"></td>
+                            <td>
+                                <a th:href="|@{/notice/read(bno=${board.bno})}|" class="text-decoration-none">[[${board.title}]]</a>
+                            </td>
+                            <td th:text="${board.writer}"></td>
+                            <td th:text="${#temporals.format(board.regDate, 'yyyy-MM-dd')}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <script th:inline="javascript">
+                        $(document).ready( function () {
+                            $('#myTable1').DataTable({
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="btn-group mt-3">
+                <button type="button" class="btn btn-primary" onclick="location.href='/notice/register'">Add to POST</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" tabindex="-1">
+        <!-- Modal content here -->
+    </div>
+</main>
+
+<th:block th:replace="~{layout/footer :: footer}"></th:block>
+</body>
+</html>

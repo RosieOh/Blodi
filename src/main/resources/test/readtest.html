@@ -1,0 +1,54 @@
+<!--contens 필수-->
+<!--    <div class="content">-->
+<!--        <div class="row mt-3">-->
+<!--            <div class="col">-->
+<!--                <div class="card">-->
+<!--                    <div class="card-header">-->
+<!--                        <h2 class="title">글 상세보기</h2>-->
+<!--                    </div>-->
+<!--                    <div class="card-body">-->
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">Bno</span>-->
+<!--                            <input type="text" class="form-control" th:value="${boardList.bno}" readonly>-->
+<!--                        </div>-->
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">Title</span>-->
+<!--                            <input type="text" class="form-control" th:value="${boardList.title}" readonly>-->
+<!--                        </div>-->
+
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">Content</span>-->
+<!--                            <textarea class="form-control col-sm-5" rows="5" readonly>[[${boardList.content}]]</textarea>-->
+<!--                        </div>-->
+
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">Writer</span>-->
+<!--                            <input type="text" class="form-control" th:value="${boardList.writer}" readonly>-->
+<!--                        </div>-->
+
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">RegDate</span>-->
+<!--                            <input type="text" class="form-control" th:value="${#temporals.format(boardList.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>-->
+<!--                        </div>-->
+<!--                        <div class="input-group mb-3">-->
+<!--                            <span class="input-group-text">ModDate</span>-->
+<!--                            <input type="text" class="form-control" th:value="${#temporals.format(boardList.modDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>-->
+<!--                        </div>-->
+
+<!--                        <div class="my-4">-->
+<!--                            <div class="float-end">-->
+<!--                                <a th:href="|@{/notice/list}|" class="text-decoration-none">-->
+<!--                                    <button type="button" class="btn btn-primary">List</button>-->
+<!--                                </a>-->
+<!--                                <a th:href="@{/notice/modify(bno=${boardList.bno})}" class="text-decoration-none">-->
+<!--                                    <button type="button" class="btn btn-secondary">Modify</button>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                    </div>&lt;!&ndash;end card body&ndash;&gt;-->
+
+<!--                </div>&lt;!&ndash;end card&ndash;&gt;-->
+<!--            </div>&lt;!&ndash; end col&ndash;&gt;-->
+<!--        </div>&lt;!&ndash; end row&ndash;&gt;-->
+<!--    </div>-->

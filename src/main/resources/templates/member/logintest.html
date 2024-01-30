@@ -1,0 +1,31 @@
+<div class="wrapper">
+  <div class="container">
+    <div class="sign-in-container">
+      <form th:action="@{/login}" method="post" class="form-horizontal">
+        <h1>Sign In</h1>
+        <div class="social-links">
+          <div>
+            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+          </div>
+          <div>
+            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+          </div>
+          <div>
+            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+          </div>
+        </div>
+        <span>or use your account</span>
+        <input type="email" name="username" class="form-control" placeholder="이메일"  autocomplete="off" required>
+      <input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off" required>
+        <button type="submit" class="form_btn">Sign In</button>
+      </form>
+    </div>
+    <div class="overlay-container">
+      <div class="overlay-right">
+        <h1>Hello, Friend</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button id="signUp" class="overlay_btn">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <title>공지사항</title>
+    <th:block th:replace="~{layout/head :: head}"></th:block>
+
+</head>
+<body id="top">
+<main>
+    <th:block th:replace="layout/header :: header"></th:block>
+
+    <section class="page-title" style="background: linear-gradient(to right, #71AEE8, #77E9CE); padding: 100px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h3> 공지사항 </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="container" style="padding-bottom: 100px;">
+        <section id="pricing" class="pricing" style="padding-top: 40px !important;">
+            <div class="container" data-aos="fade-up">
+                <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+                    <div class="pricing-item featured" style="padding: 0;">
+                        <section style="padding-top: 0;">
+                            <div style="display: flex; justify-content: center;">
+                                <div class="card" style="width: 100%;">
+                                    <div class="card-body">
+                                        <div class="card-title" style="padding-bottom: 20px; border-bottom: 1px solid;">
+                                            <div class="d-flex align-items-center mt-3">
+                                                <div class="ms-3">
+                                                    <table>
+                                                        <tr>
+                                                            <td>작성자 | </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" th:value="${boardList.writer}" readonly>
+                                                            </td>
+                                                            <td>작성일 | </td>
+                                                            <td>
+                                                                <input type="text" class="form-control" th:value="${#temporals.format(boardList.regDate, 'yyyy-MM-dd HH:mm:ss')}" readonly>
+                                                            </td>
+                                                            <!--                                                            <td>조회수 | &lt;!&ndash;<span th:text="${dto.cnt}"></span>&ndash;&gt;</td>-->
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text">Title</span>
+                                            <input type="text" class="form-control" th:value="${boardList.title}" readonly>
+                                        </div>
+                                        <div class="card-text mt-4">
+                                            <textarea class="form-control col-sm-5" rows="5" readonly>[[${boardList.content}]]</textarea>
+                                        </div>
+
+                                        <div class="card-text mt-4" th:if="${boardList.fileId}">
+                                             <strong>첨부파일 : </strong>
+                                            <a th:href="@{'/download/' + ${boardList.fileId}}">[[${fileList.originFilename}]]</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%; margin-top: 30px;">
+                                <button class="btn btn-light btn-lg" style="width:200px; float: right; background-color: #0d42ff; font-weight: bold; color: #fff;"><a th:href="@{/notice/list}" style="color: #fff;">목록</a></button>
+                                <button class="btn btn-light btn-lg" style="width:200px; float: right; border-color: #000000; font-weight: bold; margin-left: 10px; margin-right: 10px; "><a th:href="@{/notice/remove(bno=${boardList.bno})}">삭제</a></button>
+                                <button class="btn btn-dark btn-lg" style="width:200px; float: right; background-color: #4f5665; font-weight: bold; "><a class="button" th:href="@{/notice/modify(bno=${boardList.bno})}" style="color: #fff;">수정</a></button>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script th:inline="javascript">
+        const errors = [[${errors}]]
+        console.log(errors)
+        let errorMsg = ''
+        if(errors){
+            for (let i = 0; i < errors.length; i++) {
+                errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+            }
+            alert(errorMsg)
+        }
+
+    </script>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+
+</body>
+</html>

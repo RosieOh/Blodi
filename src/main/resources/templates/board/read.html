@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <title>공지사항</title>
+    <th:block th:replace="~{layout/head :: head}"></th:block>
+
+</head>
+<body id="top">
+<main>
+    <th:block th:replace="layout/header :: header"></th:block>
+
+    <section class="page-title" style="background: linear-gradient(to right, #71AEE8, #77E9CE); padding: 100px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h3> 공지사항 </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--contens 필수-->
+    <div class="contents">
+        <div class="container ">
+            <div class="col-md-11 order-details">
+                <div class="section-title text-center">
+                    <h1 th:text="${dto.title}"></h1>
+                </div>
+                <div class="order-summary">
+                    <div class="order-products">
+                        <div class="order-col">
+                                <p th:text="${dto.regDate}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${dto != null}">
+                        <p th:text="${dto.content != null ? dto.content : 'N/A'}">Content: N/A</p>
+                    </div>
+                </div>
+                <div class="btn_group">
+                    <a th:href="@{'/notice/list'}" class="btn btn-primary">목록으로</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/notice/modify/' + ${dto.bno}}" class="btn btn-warning">수정</a>
+                    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/notice/remove/' + ${dto.bno}}"  class="btn btn-danger">삭제</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+
+</body>
+</html>

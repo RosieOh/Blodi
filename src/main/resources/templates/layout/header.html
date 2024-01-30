@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="header">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <i class="bi-back"></i>
+                <span style="color: #fff">교수학습지원센터</span>
+            </a>
+
+            <div class="d-lg-none ms-auto me-4">
+                <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav" style="padding-left: 120px; margin-right: 50px;">
+                <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                    <li class="nav-item">
+                        <a class="nav-link click-scroll" th:href="@{/}">Home</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">학생</a>
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/studentctl/list}">학생 E-PortFolio</a></li>
+                            <li><a class="dropdown-item" th:href="@{/studententrance/list}">학생 교수학습자료실</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink2" role="button" data-bs-toggle="dropdown" aria-expanded="false">교사</a>
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/teacherctl/list}">교사 E-PortFolio</a></li>
+                            <li><a class="dropdown-item" th:href="@{/teacherentrance/list}">교사 교수학습자료실</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarLightDropdownMenuLink3" role="button" data-bs-toggle="dropdown" aria-expanded="false">커뮤니티</a>
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/notice/list}">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{/faq/list}">자주 묻는 질문</a></li>
+                            <li><a class="dropdown-item" th:href="@{/qna/list}">질문 및 답변</a></li>
+                            <li><a class="dropdown-item" th:href="@{/contact}">Contact</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+
+                <ul class="navbar-nav ml-auto mt-10" >
+                    <th:block sec:authorize="isAnonymous()">
+                        <li class="nav-item">
+                            <a class="nav-link text-white add-button" th:href="@{/member/join}">회원가입</a>
+                        </li>
+                        &nbsp;&nbsp;
+                        <li class="nav-item">
+                            <a th:href="@{/member/login}" class="nav-link text-white add-button">로그인</a>
+                        </li>
+                    </th:block>
+
+                    <!-- 로그인 한 경우 -->
+                    <th:block sec:authorize="isAuthenticated()">
+                        <li class="nav-item" th:if="${member != null}">
+                            <a th:href="@{/member/memberUpdate(id=${member.mname})}" class="nav-link text-white add-button">수정</a>
+                        </li>
+                        <li class="nav-item" th:if="${member != null}">
+                            <span class="nav-link text-white">
+<!--                                <span th:if="${#authorization.expression('hasAnyAuthority(''ROLE_ADMIN'', ''ROLE_TEACHER'', ''ROLE_USER'')')}" style="display:none"></span>-->
+                                <span th:text="${#authentication.principal.mname}"></span>님 환영합니다!
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <form th:action="@{/logout}" method="post">
+                                <a href="#" onclick="this.closest('form').submit();" class="nav-link">로그아웃</a>
+                            </form>
+                        </li>
+                        <!-- 권한 별 로그인 특정 메뉴  -->
+                        <ul class="navbar-nav ml-auto mt-10" style="height: 38px;">
+                            <li class="nav-item">
+                                <th:block sec:authorize="hasAuthority('ADMIN')">
+                                    <a th:href="@{/admin/adminMain}" class="nav-link login-button">관리자 페이지</a>
+                                </th:block>
+                            </li>
+                            <li class="nav-item">
+                                <th:block sec:authorize="hasAuthority('USER')">
+                                    <a th:href="@{/member/mypage}" class="nav-link">마이 페이지</a>
+                                </th:block>
+                            <li class="nav-item">
+                                <th:block sec:authorize="hasAuthority('TEACHER')">
+                                    <a th:href="@{/user/teacherMain}" class="nav-link">교사용 페이지</a>
+                                </th:block>
+                            </li>
+                        </ul>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</th:block>
+</html>

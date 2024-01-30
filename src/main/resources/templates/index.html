@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>T-sherpa 교수학습지원센터</title>
+    <th:block th:replace="~{layout/head :: head}"></th:block>
+
+</head>
+<body id="top">
+<main>
+    <th:block th:replace="~{layout/header :: header}"></th:block>
+
+    <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-12 mx-auto">
+                    <h1 class="text-white text-center">Study. Learn. Enjoy</h1>
+                    <h6 class="text-center">교육을 즐겁게, 세상을 이룹게</h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="featured-section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                    <div class="custom-block bg-white shadow-lg">
+                        <a href="topics-detail.html">
+                            <div class="d-flex">
+                                <div>
+                                    <h5 class="mb-2">Web Design</h5>
+                                    <p class="mb-0">When you search for free CSS templates, you will notice that TemplateMo is one of the best websites.</p>
+                                </div>
+                                <span class="badge bg-design rounded-pill ms-auto">14</span>
+                            </div>
+                            <img th:src="@{/images/topics/undraw_Remote_design_team_re_urdx.png}" class="custom-block-image img-fluid" alt="">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-12">
+                    <div class="custom-block custom-block-overlay">
+                        <div class="d-flex flex-column h-100">
+                            <img th:src="@{/images/businesswoman-using-tablet-analysis.jpg}" class="custom-block-image img-fluid" alt="">
+                            <div class="custom-block-overlay-text d-flex">
+                                <div>
+                                    <h5 class="text-white mb-2">Finance</h5>
+                                    <p class="text-white">Topic Listing Template includes homepage, listing page, detail page, and contact page. You can feel free to edit and adapt for your CMS requirements.</p>
+                                    <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Learn More</a>
+                                </div>
+                                <span class="badge bg-finance rounded-pill ms-auto">25</span>
+                            </div>
+                            <div class="social-share d-flex">
+                                <p class="text-white me-4">Share:</p>
+                                <ul class="social-icon">
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link bi-twitter"></a>
+                                    </li>
+                                    <li class="social-icon-item">
+                                        <a href="#" class="social-icon-link bi-facebook"></a>
+                                    </li>Designms-auto"></a>
+                                </ul>
+                            </div>
+                            <div class="section-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<th:block th:replace="~{layout/footer :: footer}"></th:block>
+
+</body>
+</html>

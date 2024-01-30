@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Topic Listing Bootstrap 5 Template</title>
+    <th:block th:replace="layout/head :: head"></th:block>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+</head>
+<body id="top">
+<th:block th:replace="layout/header :: header"></th:block>
+
+
+<main>
+    <section class="page-title" style="background: linear-gradient(to right, #71AEE8, #77E9CE); padding: 100px 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2 text-center">
+                    <h3> 공지사항 </h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing" style="padding-top: 100px;">
+        <div class="container" data-aos="fade-up">
+            <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+                <div class="pricing-item featured" style="padding:0;">
+                    <form th:action="@{/qna/register}" method="post">
+                        <div class="col-12">
+                            <div class="card w-100">
+                                <div class="card-body">
+                                    <div class="table-responsive project-list">
+                                        <!-- Added border attribute to the table -->
+                                        <table class="table project-table table-centered table-nowrap" style="border: none;">
+                                            <!--                                            <div class="input-group mb-3" th:if="${boardType == 'NOTICE'}">-->
+                                            <!--                                                <select name="boardType" id="boardType">-->
+                                            <!--                                                    <option value="NOTICE">공지사항</option>-->
+                                            <!--                                                </select>-->
+                                            <tbody>
+                                            <tr>
+                                                <td style="border: none;"><input type="text" id="title" name="title" placeholder="제목을 입력하세요" class="form-control" required></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="border: none;">
+                                                    <div id="editor">
+                                                        <textarea name="content" id="myTextarea" rows="8" maxlength="1000" class="form-control" style="height: 200px; border: 1px solid #cbcbcb"></textarea>
+                                                    </div>
+                                                    <script>
+                                                        const Editor = toastui.Editor;
+                                                        const textarea = document.querySelector('#myTextarea');
+
+                                                        // 숨겨진 textarea 대신에 에디터를 생성할 div 요소를 만듭니다.
+                                                        const editorDiv = document.createElement('div');
+                                                        editorDiv.id = 'editor';
+                                                        textarea.parentNode.insertBefore(editorDiv, textarea);
+                                                        textarea.style.display = 'none';  // 숨겨진 textarea
+
+                                                        const editor = new Editor({
+                                                            el: editorDiv,
+                                                            height: '500px',
+                                                            initialEditType: 'markdown',
+                                                            previewStyle: 'vertical',
+                                                            initialValue: textarea.value  // 초기값을 textarea의 값으로 설정
+                                                        });
+
+                                                        // 에디터의 내용이 변경될 때마다 textarea에 값을 업데이트합니다.
+                                                        editor.on('change', () => {
+                                                            textarea.value = editor.getMarkdown();
+                                                        });
+                                                    </script>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <div class="input-group mb-3">
+                                                <select name="boardType" id="boardType">
+                                                    <option value="QNA" th:selected="${boardType == 'QNA'}">질문 및 답변</option>
+                                                </select>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">Writer</span>
+                                                <input type="text" name="writer" class="form-control" placeholder="Writer" th:value="${#authentication.principal.name}" readonly>
+                                            </div>
+                                            <div class="btn-group float-right mr-3" style="float:right;">
+                                                <input type="submit" id="btn" class="btn btn-dark" style="height: 100%; " value="등록">
+                                            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row mt-3">
+        <div class="col ">
+            <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="file" name="files" class="form-control" multiple >
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary uploadBtn">Upload</button>
+                    <button type="button" class="btn btn-outline-dark closeUploadBtn" >Close</button>
+                </div>
+            </div>
+        </div>
+    </div><!-- register modal -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="/js/upload.js"></script>
+
+    </div><!-- layout fragment end -->
+
+
+    <script th:inline="javascript">
+
+        const errors = [[${errors}]]
+        console.log(errors)
+
+        let errorMsg = ''
+
+        if(errors){
+            for (let i = 0; i < errors.length; i++) {
+                errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+            }
+            alert(errorMsg)
+        }
+
+        //업로드 모달
+        const uploadModal = new bootstrap.Modal(document.querySelector(".uploadModal"))
+
+        document.querySelector(".uploadFileBtn").addEventListener("click", function(e){
+
+            e.stopPropagation()
+            e.preventDefault()
+            uploadModal.show()
+
+        }, false)
+
+
+        document.querySelector(".uploadBtn").addEventListener("click", function(e){
+
+            const formObj = new FormData();
+
+            const fileInput = document.querySelector("input[name='files']")
+
+            console.log(fileInput.files)
+
+            const files = fileInput.files
+
+            for (let i = 0; i < files.length; i++) {
+                formObj.append("files", files[i]);
+            }
+
+
+            uploadToServer(formObj).then(result => {
+                console.log(result)
+                //console.log(result)
+                for (const uploadResult of result) {
+                    showUploadFile(uploadResult)
+                }
+                uploadModal.hide()
+            }).catch(e => {
+                uploadModal.hide()
+            })
+
+        },false)
+
+        const uploadResult = document.querySelector(".uploadResult")
+
+        function showUploadFile({uuid, fileName, link}){
+
+            const str =`<div class="card col-4">
+            <div class="card-header d-flex justify-content-center">
+                ${fileName}
+                <button class="btn-sm btn-danger" onclick="javascript:removeFile('${uuid}', '${fileName}', this)" >X</button>
+            </div>
+            <div class="card-body">
+                 <img src="/view/${link}" data-src="${uuid+"_"+fileName}" >
+            </div>
+        </div><!-- card -->`
+
+            uploadResult.innerHTML += str
+        }
+
+
+        function removeFile(uuid,fileName, obj){
+
+            console.log(uuid)
+            console.log(fileName)
+
+            console.log(obj)
+
+            const targetDiv = obj.closest(".card")
+
+            removeFileToServer(uuid, fileName).then(data => {
+                targetDiv.remove()
+            })
+        }
+
+        document.querySelector(".submitBtn").addEventListener("click", function(e){
+
+            e.preventDefault()
+            e.stopPropagation()
+
+            const target = document.querySelector(".uploadHidden")
+
+            const uploadFiles = uploadResult.querySelectorAll("img")
+
+            let str = ''
+
+            for (let i = 0; i < uploadFiles.length ; i++) {
+                const uploadFile = uploadFiles[i]
+                const imgLink = uploadFile.getAttribute("data-src")
+
+                str += `<input type='hidden' name='fileNames' value="${imgLink}">`
+            }
+
+            target.innerHTML = str;
+
+            const formObj = document.querySelector("form");
+
+            formObj.submit();
+            formObj.reset();
+
+        }, false)
+
+
+    </script>
+
+</main>
+
+<th:block th:replace="layout/footer :: footer"></th:block>
+
+</body>
+</html>
